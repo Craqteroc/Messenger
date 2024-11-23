@@ -1,0 +1,185 @@
+﻿<Window x:Class="TestBDMessenger.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestBDMessenger" xmlns:customcontrols="clr-namespace:TestBDMessenger.CustomContrl" xmlns:viewmodels="clr-namespace:TestBDMessenger.ViewModel"
+        mc:Ignorable="d"
+        x:Name="mainWindow"
+        AllowsTransparency="True"
+        Background="Transparent"
+        FontSize="16"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Title="Чат ЭнергоСбыт" Height="768" Width="1250">
+    <Window.Resources>
+        <Style x:Key="ContactInfoBt" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <ControlTemplate x:Key="ButtonInfoTempl" TargetType="{x:Type Button}">
+            <Border Background="{TemplateBinding Background}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                
+            
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Ellipse Width="40" Height="40">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="/Assets/profile-user.png" Stretch="UniformToFill"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <Grid Grid.Column="1">
+                    
+                    <TextBlock >
+                        
+                        <Run Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                             FontWeight="Bold" FontSize="20"/>
+                        
+                        <LineBreak/>
+                        
+                        <Run Text="{Binding users.user_status, FallbackValue=Online, 
+                            TargetNullValue=Online, UpdateSourceTrigger=PropertyChanged}"
+                             FontSize="15"/>
+                        
+                    </TextBlock>
+
+                </Grid>
+                
+            </Grid>
+            </Border>
+        </ControlTemplate>
+        
+
+    </Window.Resources>
+    
+    <Border CornerRadius="20" Background="White">      <!--Поменять цвет-->
+ 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Name="BorderTitle" Background="#512531" CornerRadius="20,20,0,0" 
+                    MouseDown="BorderTitle_MouseDown" Grid.ColumnSpan="3">  <!--Поменять цвет-->
+                <Grid>
+                    <TextBlock Text="{Binding Title, ElementName=mainWindow}"
+                               HorizontalAlignment="Left" Margin="15,0,0,0"
+                               VerticalAlignment="Center" Foreground="White"
+                               FontSize="20" FontWeight="Bold"/>
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="10,0,0,0">
+                        
+                        <Button Name="BtMinSize" Content="{StaticResource minimize}" 
+                                Style="{StaticResource TitleButtonStyle}" 
+                                Click="BtMinSize_Click"></Button>
+                        
+                        <Button Name="BtMaxSize" Content="{StaticResource maximize}" 
+                                Style="{StaticResource TitleButtonStyle}"
+                                Click="BtMaxSize_Click"></Button>               <!--Поиграться с размерами-->
+                        
+                        <Button Name="BtClose" Content="{StaticResource close}" 
+                                Style="{StaticResource TitleButtonStyle}"
+                                Click="BtClose_Click"></Button>
+                        
+                        
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+
+            <Grid MinWidth="406" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Margin="15,0,0,0" Height="75">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Chats" VerticalAlignment="Center" 
+                               HorizontalAlignment="Left" FontSize="20" 
+                               FontWeight="SemiBold"/>
+
+                    <Button x:Name="ChatsSerchBt" Content="{StaticResource search}" 
+                            Style="{StaticResource TitleButtonStyle}" Grid.Column="2"></Button>
+
+                    <ToggleButton x:Name="TogleBtSerch" Content="{StaticResource more}" 
+                                  Style="{StaticResource SerchButtonStyle}" Grid.Column="3"/>
+
+                </Grid>
+
+                <Border Margin="20" Height="50" 
+                        x:Name="BorderSerchBox" CornerRadius="15" 
+                        Background="#dce1de" Grid.Row="1" 
+                        FocusManager.FocusedElement="{Binding ElementName=SerchQuery}">
+                    
+                    <TextBox Name="SerchQuery" Padding="12,0,0,0" 
+                             Background="Transparent" BorderThickness="0" 
+                             Text="Поиск" VerticalContentAlignment="Center" 
+                             VerticalAlignment="Stretch"/>
+                </Border>
+
+                <customcontrols:ChatList Grid.Row="3"/>
+
+            </Grid>
+        
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    
+                </Grid.RowDefinitions>
+
+                <Grid VerticalAlignment="Top" Height="75" Margin="0,0,15,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Template="{StaticResource ButtonInfoTempl}" Style="{StaticResource ContactInfoBt}"/>
+                    
+                    <Button Grid.Column="1" Style="{StaticResource TitleButtonStyle}"
+                            Content="{StaticResource search}"/>
+
+                    <ToggleButton Content="{StaticResource more}" 
+                                  Style="{StaticResource SerchButtonStyle}" Grid.Column="2"/>
+
+                </Grid>
+
+                <customcontrols:ConverMessegeBody Grid.Row="1"/>
+                
+                
+
+            </Grid>
+            
+        </Grid>
+        
+    </Border>
+    
+</Window>

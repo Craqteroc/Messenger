@@ -1,0 +1,183 @@
+﻿<UserControl x:Class="TestBDMessenger.CustomContrl.ChatList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestBDMessenger.CustomContrl" xmlns:viewmodels="clr-namespace:TestBDMessenger.ViewModel"
+             mc:Ignorable="d" MinWidth="406" >
+    
+    <UserControl.Resources>
+        
+        <DataTemplate x:Key="ChatBtItemTemp">
+            <RadioButton GroupName="ChatBt">
+                <RadioButton.Style >
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="MinHeight" Value="15"/>
+                        <Setter Property="Padding" Value="10"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Content" Value="{Binding chat_name}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border x:Name="border" BorderThickness="{TemplateBinding BorderThickness}" 
+                                            Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            CornerRadius="20" Padding="{TemplateBinding Padding}"
+                                            SnapsToDevicePixels="True">
+                                        <Grid>
+                                            
+                                            <Grid.RowDefinitions>
+                                                
+                                                <RowDefinition Height="auto"/>
+                                                <RowDefinition Height="auto"/>
+                                                
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0">
+                                                
+                                                <Grid.ColumnDefinitions>
+                                                    
+                                                    <ColumnDefinition Width="auto"/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="auto"/>
+                                                    
+                                                </Grid.ColumnDefinitions>
+
+                                                <Ellipse Width="50" Height="50">
+                                                    <Ellipse.Fill>
+                                                        <ImageBrush ImageSource="..\Assets\profile-user.png" Stretch="UniformToFill"
+                                                                    />
+                                                    </Ellipse.Fill>
+                                                </Ellipse>
+
+                                                <Grid Grid.Column="1" Margin="20,0" x:Name="fas">
+
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    
+                                                    <!--<ListBox Grid.Row="0" ItemsSource="{Binding Users}" >
+                                                        <ListBox.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding Username}" Grid.Row="0">
+                                                                    <TextBlock.Style>
+                                                                        <Style TargetType="{x:Type TextBlock}">
+                                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                            <Style.Triggers>
+                                                                                <DataTrigger 
+                                                                        Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" 
+                                                                        Value="True">
+                                                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </TextBlock.Style>
+                                                                </TextBlock>
+                                                            </DataTemplate>
+                                                        </ListBox.ItemTemplate>
+                                                    </ListBox>-->
+
+                                                    <TextBlock Text="{Binding username}" Grid.Row="0">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Foreground" Value="Black"/>
+                                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger 
+                                                                        Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" 
+                                                                        Value="True">
+                                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                    <TextBlock Text="{Binding chat_name}" Grid.Row="1">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger 
+                                                                        Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" 
+                                                                        Value="True">
+                                                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+
+                                                </Grid>
+
+                                                <Grid Grid.Column="2">
+                                                    <TextBlock Text="{Binding LastTimeMessage}" HorizontalAlignment="Right">
+                                                        
+                                                    </TextBlock>
+                                                </Grid>
+                                                
+                                                <Separator Grid.ColumnSpan="2" Grid.Column="1"
+                                                           VerticalAlignment="Bottom" BorderThickness=".5" 
+                                                       BorderBrush="Gray"/>
+                                                
+                                            </Grid>
+
+                                            
+                                            <Grid Grid.Row="1" Height="Auto" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="50"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <UniformGrid Columns="3" Grid.Column="1">
+                                                    <Button Style="{StaticResource TitleButtonStyle}" Content="{StaticResource archive}"/>
+                                                    <Button Style="{StaticResource TitleButtonStyle}" Content="{StaticResource pinned}"/>
+                                                    <Button Style="{StaticResource TitleButtonStyle}" Content="{StaticResource mute}"/>
+                                                </UniformGrid>
+                                            </Grid>
+                                            
+                                            
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </RadioButton.Style>
+            </RadioButton>
+        </DataTemplate>
+    </UserControl.Resources>
+
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+        
+    
+    <Grid Margin="25,20">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Path Fill="Black" Data="{StaticResource allchats}" />
+                <TextBlock Text="Все чаты" FontWeight="SemiBold" 
+                           VerticalAlignment="Center" Margin="10,0,0,0"/>
+            </StackPanel>
+            
+            <ItemsControl ItemsSource="{Binding Users}" 
+                          ItemTemplate="{StaticResource ChatBtItemTemp}" >
+                <ItemsControl.DataContext >
+                    <viewmodels:ViewModel/>
+                </ItemsControl.DataContext>
+            </ItemsControl>
+            
+                <ItemsControl ItemsSource="{Binding messages_mes}" 
+                          ItemTemplate="{StaticResource ChatBtItemTemp}" Padding="20,0">
+                    <ItemsControl.DataContext >
+                        <viewmodels:ViewModel/>
+                    </ItemsControl.DataContext>
+                </ItemsControl>
+            </StackPanel>
+        
+    </Grid>
+    </ScrollViewer>
+</UserControl>

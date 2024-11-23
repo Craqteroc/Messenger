@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="TestBDMessenger.CustomContrl.StatusThumbs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestBDMessenger.CustomContrl"
+             mc:Ignorable="d" 
+             >
+    <UserControl.Resources>
+        <DataTemplate x:Key="thumbsTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="55"/>
+                    <RowDefinition MinHeight="6"/>
+                    <RowDefinition MinHeight="auto"/>
+                </Grid.RowDefinitions>
+                
+                <Grid>
+                    
+                    <Ellipse Name="OuterEllipse" Width="55" 
+                         Height="55" StrokeThickness="1" 
+                         Stroke="#512531" StrokeDashArray="5"
+                         StrokeDashCap="Round" VerticalAlignment="Center"
+                         HorizontalAlignment="Center" Stretch="Uniform"></Ellipse>
+
+                    <Ellipse Name="InnerEllipse" Width="50" 
+                         Height="50" VerticalAlignment="Center"
+                         HorizontalAlignment="Center" Stretch="Uniform"></Ellipse>
+
+                    <Path Data="{StaticResource addSign}" Fill="White"
+                      VerticalAlignment="Center" HorizontalAlignment="Center"></Path>
+
+                </Grid>
+
+                <Ellipse Name="ContactPhotoEllipse" Width="26" 
+                         Height="26" StrokeThickness="2" 
+                         Stroke="White" VerticalAlignment="Bottom"
+                         HorizontalAlignment="Right" Stretch="Uniform"></Ellipse>
+
+                <TextBlock Grid.Row="2" Text="Cname"
+                           TextTrimming="CharacterEllipsis" 
+                           TextAlignment="Center"></TextBlock>
+
+            </Grid>
+            
+            
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <ItemsControl ItemTemplate="{StaticResource thumbsTemplate}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal">
+                    
+                </StackPanel>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+    </ItemsControl>
+</UserControl>
